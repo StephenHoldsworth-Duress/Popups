@@ -17,11 +17,13 @@ struct AnyPopup: Popup, Sendable {
     private(set) var height: CGFloat? = nil
     private(set) var dragHeight: CGFloat = 0
     private(set) var shouldDismissKeyboardOnPopupToggle: Bool = true
-
+	
     private var _dismissTimer: PopupActionScheduler? = nil
     private var _body: AnyView
     private let _onFocus: () -> ()
     private let _onDismiss: () -> ()
+	
+	var overlayEnabled: Bool
 }
 
 
@@ -39,6 +41,7 @@ extension AnyPopup {
             self._body = .init(popup)
             self._onFocus = popup.onFocus
             self._onDismiss = popup.onDismiss
+			self.overlayEnabled = popup.overlayEnabled
         }
     }
 }

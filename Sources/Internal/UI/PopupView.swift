@@ -12,6 +12,8 @@
 import SwiftUI
 
 struct PopupView: View {
+	@State var overlayEnabled: Bool = false
+	
     #if os(tvOS)
     let rootView: any View
     #endif
@@ -36,12 +38,12 @@ struct PopupView: View {
             .disabled(!stack.popups.isEmpty)
             .overlay(createBody())
         #else
-        createBody()
+		createBody()
         #endif
     }
 }
 private extension PopupView {
-    func createBody() -> some View {
+	func createBody() -> some View {
         GeometryReader { reader in
             createPopupStackView()
                 .ignoresSafeArea()
@@ -57,7 +59,9 @@ private extension PopupView {
 private extension PopupView {
     func createPopupStackView() -> some View {
         ZStack {
-            createOverlayView()
+			if (overlayEnabled) {
+				createOverlayView()
+			}
             createTopPopupStackView()
             createCenterPopupStackView()
             createBottomPopupStackView()
@@ -103,6 +107,8 @@ private extension PopupView {
                 default: return
             }}
         newStack.last?.onFocus()
+		
+		overlayEnabled = newStack.last?.overlayEnabled ?? false
     }
     func onKeyboardStateChange(_ isKeyboardActive: Bool) { Task {
         await updateViewModels { await $0.updateScreen(isKeyboardActive: isKeyboardActive) }

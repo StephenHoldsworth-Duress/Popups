@@ -38,6 +38,11 @@ public protocol Popup: View, Sendable {
      Method triggered when a popup is dismissed.
      */
     func onDismiss()
+	
+	/**
+	 Bool flag for whether the overlay should be rendered as part of the sheet. This is due to us desiring to have interactivity with views behind the sheet on occassion.
+	 */
+	var overlayEnabled: Bool { get }
 }
 
 // MARK: Default Methods Implementation
