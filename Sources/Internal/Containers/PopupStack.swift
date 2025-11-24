@@ -103,14 +103,18 @@ private extension PopupStack {
         []
     }
 	nonisolated func removedAllPopupsToID(_ id: String) async -> [AnyPopup] { await popups.modifiedAsync {
-		// Get the target index or 0, if it cannot be found
-		let targetPopupIndex = $0.firstIndex(where: { popup in popup.id.isSameType(as: id) }) ?? 0
+		// If we cannot find the index, remove all elements
+		guard let targetPopupIndex = $0.firstIndex(where: { popup in popup.id.isSameType(as: id) }) else { return $0.removeAll() }
 		
-		// Last index
+		// Get the start and end index
 		let endIndex = $0.count - 1
+		let startIndex = targetPopupIndex + 1
 		
-		// Remove the subrange
-		return $0.removeSubrange(targetPopupIndex...endIndex)
+		// If the start index exceeds our end index, return an unmodified array
+		if startIndex > endIndex { return }
+		
+		// Otherwise, remove the subrange
+		$0.removeSubrange(startIndex...endIndex)
 	}}
 }
 
