@@ -35,6 +35,7 @@ extension PopupStack {
 extension PopupStack { enum StackOperation {
     case insertPopup(AnyPopup)
     case removeLastPopup, removePopup(AnyPopup), removeAllPopupsOfType(any Popup.Type), removeAllPopupsWithID(String), removeAllPopups
+	case removeToID(String)
 }}
 extension PopupStack {
     func modify(_ operation: StackOperation) { Task {
@@ -67,6 +68,7 @@ private extension PopupStack {
         case .removeAllPopupsOfType(let popupType): await removedAllPopupsOfType(popupType)
         case .removeAllPopupsWithID(let id): await removedAllPopupsWithID(id)
         case .removeAllPopups: await removedAllPopups()
+		case .removeToID(let id): await removedAllPopupsToID(id)
     }}
     nonisolated func getNewPriority(_ newPopups: [AnyPopup]) async -> StackPriority {
         await priority.reshuffled(newPopups)
@@ -100,6 +102,16 @@ private extension PopupStack {
     nonisolated func removedAllPopups() async -> [AnyPopup] {
         []
     }
+	nonisolated func removedAllPopupsToID(_ id: String) async -> [AnyPopup] { await popups.modifiedAsync {
+		// Get the target index or 0, if it cannot be found
+		let targetPopupIndex = $0.firstIndex(where: { popup in popup.id.isSameType(as: id) }) ?? 0
+		
+		// Last index
+		let endIndex = $0.count - 1
+		
+		// Remove the subrange
+		return $0.removeSubrange(targetPopupIndex...endIndex)
+	}}
 }
 
 

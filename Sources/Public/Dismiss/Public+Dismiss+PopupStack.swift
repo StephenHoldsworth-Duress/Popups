@@ -54,4 +54,6 @@ public extension PopupStack {
      - Important: Make sure you use the correct **popupStackID** from which you want to remove the popups.
      */
     @MainActor static func dismissAllPopups(popupStackID: PopupStackID = .shared) async { await fetch(id: popupStackID)?.modify(.removeAllPopups) }
+	
+	@MainActor static func dismissPopupsUntil(popupStackID: PopupStackID = .shared, targetPopupID: String) async { await fetch(id: popupStackID)?.modify(.removeToID(targetPopupID)) }
 }

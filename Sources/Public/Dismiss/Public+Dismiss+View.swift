@@ -54,4 +54,6 @@ public extension View {
      - Important: Make sure you use the correct **popupStackID** from which you want to remove the popups.
      */
     @MainActor func dismissAllPopups(popupStackID: PopupStackID = .shared) async { await PopupStack.dismissAllPopups(popupStackID: popupStackID) }
+	
+	@MainActor func dismissPopupsUntil(popupStackID: PopupStackID = .shared, targetPopupID: String) async { await PopupStack.dismissPopupsUntil(popupStackID: popupStackID, targetPopupID: targetPopupID) }
 }
