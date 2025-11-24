@@ -61,6 +61,7 @@ private extension PopupView {
         ZStack {
 			if (overlayEnabled) {
 				createOverlayView()
+					.transition(.opacity)
 			}
             createTopPopupStackView()
             createCenterPopupStackView()
@@ -108,7 +109,9 @@ private extension PopupView {
             }}
         newStack.last?.onFocus()
 		
-		overlayEnabled = newStack.last?.overlayEnabled ?? false
+		withAnimation(.easeInOut(duration: 0.7)) {
+			overlayEnabled = newStack.last?.overlayEnabled ?? false
+		}
     }
     func onKeyboardStateChange(_ isKeyboardActive: Bool) { Task {
         await updateViewModels { await $0.updateScreen(isKeyboardActive: isKeyboardActive) }
