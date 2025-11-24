@@ -126,6 +126,14 @@ extension PopupStack {
         await logNoStackRegisteredErrorIfNeeded(stack: stack, id: id)
         return stack
     }
+
+	nonisolated static func contains(id: PopupStackID, targetID: String) async -> Bool {
+		// Get the correct stack
+		guard let stack = await PopupStackContainer.stacks.first(where: { $0.id == id }) else { return false }
+		
+		// Return true if the sheet id exists within the stack
+		return await stack.popups.contains { $0.id.isSameType(as: targetID) }
+	}
 }
 private extension PopupStack {
     nonisolated static func logNoStackRegisteredErrorIfNeeded(stack: PopupStack?, id: PopupStackID) async { if stack == nil {

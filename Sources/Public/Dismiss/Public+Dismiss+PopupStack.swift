@@ -56,4 +56,6 @@ public extension PopupStack {
     @MainActor static func dismissAllPopups(popupStackID: PopupStackID = .shared) async { await fetch(id: popupStackID)?.modify(.removeAllPopups) }
 	
 	@MainActor static func dismissPopupsUntil(popupStackID: PopupStackID = .shared, targetPopupID: String) async { await fetch(id: popupStackID)?.modify(.removeToID(targetPopupID)) }
+	
+	@MainActor static func containsID(popupStackID: PopupStackID = .shared, targetPopupID: String) async -> Bool { await contains(id: popupStackID, targetID: targetPopupID) }
 }
