@@ -109,7 +109,7 @@ private extension PopupView {
             }}
         newStack.last?.onFocus()
 		
-		withAnimation(.easeInOut(duration: 0.7)) {
+		withAnimation(.easeInOut(duration: 0.3)) {
 			overlayEnabled = newStack.last?.overlayEnabled ?? false
 		}
     }
