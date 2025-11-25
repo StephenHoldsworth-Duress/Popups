@@ -17,7 +17,7 @@ struct StackPriority: Equatable, Sendable {
     var bottom: CGFloat { values[2] }
     var overlay: CGFloat { 1 }
 
-    private var values: [CGFloat] = [0, 0, 0]
+    private var values: [CGFloat] = [1, 0, 0]
 }
 
 // MARK: Reshuffled
