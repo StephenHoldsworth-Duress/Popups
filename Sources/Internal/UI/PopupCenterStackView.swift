@@ -13,7 +13,6 @@ import SwiftUI
 
 struct PopupCenterStackView: View {
     @ObservedObject var viewModel: VM.CenterStack
-
     
     var body: some View { if viewModel.screen.height > 0 {
         ZStack(content: createPopupStack)
@@ -39,6 +38,7 @@ private extension PopupCenterStackView {
             .opacity(viewModel.calculateOpacity(for: popup))
             .focusSection_tvOS()
             .padding(viewModel.activePopupProperties.outerPadding)
+            .onDisappear { viewModel.objectWillChange.send() }
     }
 }
 
