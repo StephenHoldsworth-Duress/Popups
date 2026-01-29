@@ -161,4 +161,7 @@ public extension LocalConfigVertical {
      ![image](https://github.com/Mijick/Assets/blob/main/Framework%20Docs/Popups/bottom-popup-draggable-area.png?raw=true)
      */
     func dragGestureAreaSize(_ value: CGFloat) -> Self { self.dragGestureAreaSize = value; return self }
+    
+    
+    func isDragToDismissEnabled(_ value: Bool) -> Self { self.isDragGestureEnabled = value; return self }
 }

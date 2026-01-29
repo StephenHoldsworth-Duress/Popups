@@ -26,6 +26,7 @@ struct AnyPopupConfig: LocalConfig, Sendable { init() {}
     var isTapOutsideToDismissEnabled: Bool = false
     var isDragGestureEnabled: Bool = false
     var dragGestureAreaSize: CGFloat = 0
+    var isDragToDismissEnabled: Bool = true
 }
 
 // MARK: Initialize
@@ -42,5 +43,6 @@ extension AnyPopupConfig {
         self.isTapOutsideToDismissEnabled = config.isTapOutsideToDismissEnabled
         self.isDragGestureEnabled = config.isDragGestureEnabled
         self.dragGestureAreaSize = config.dragGestureAreaSize
+        self.isDragToDismissEnabled = config.isDragGestureEnabled
     }
 }

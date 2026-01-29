@@ -319,6 +319,10 @@ extension VM.VerticalStack {
 }
 private extension VM.VerticalStack {
     func isValidDragGesture(_ value: DragGestureState) -> Bool {
+        // Removing the checks for whether a drag gesture is valid or not.
+        // This function is not fully understood, and created some unexpected drag detents behaviour.
+        return true
+        
         guard popups.isEmpty == false else { return false }
         guard let gestureAreaSize = popups.last?.config.dragGestureAreaSize, gestureAreaSize >= 0 else { return false }
 
@@ -373,7 +377,11 @@ extension VM.VerticalStack {
     func onPopupDragGestureEnded(_ value: DragGestureState) async {
         guard value.height != 0, let activePopup = popups.last, isValidDragGesture(value) else { return }
 
-        await dismissLastPopupIfNeeded(activePopup)
+        // Added an additional configuration for whether we can swipe to dismiss the sheet
+        // This can allow us to have detents that are really low on the screen, without conflicting with the dismiss detection
+        if (popups.last?.config.isDragToDismissEnabled ?? false ){
+            await dismissLastPopupIfNeeded(activePopup)
+        }
 
         let targetDragHeight = await calculateTargetDragHeight(activePopup)
         await updateGestureTranslation(0)
@@ -381,10 +389,12 @@ extension VM.VerticalStack {
     }
 }
 private extension VM.VerticalStack {
-    func dismissLastPopupIfNeeded(_ popup: AnyPopup) async { switch activePopupProperties.translationProgress >= dragThreshold {
+    func dismissLastPopupIfNeeded(_ popup: AnyPopup) async {
+        switch activePopupProperties.translationProgress >= dragThreshold {
         case true: await closePopupAction?(popup)
         case false: return
-    }}
+        }
+    }
     func calculateTargetDragHeight(_ activePopup: AnyPopup) async -> CGFloat {
         guard let activePopupHeight = activePopup.height else { return 0 }
 

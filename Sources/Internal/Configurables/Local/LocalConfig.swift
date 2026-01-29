@@ -26,4 +26,5 @@ public protocol LocalConfig { init()
     var isTapOutsideToDismissEnabled: Bool { get set }
     var isDragGestureEnabled: Bool { get set }
     var dragGestureAreaSize: CGFloat { get set }
+    var isDragToDismissEnabled: Bool { get set }
 }
