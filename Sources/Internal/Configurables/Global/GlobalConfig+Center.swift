@@ -28,4 +28,5 @@ public final class GlobalConfigCenter: GlobalConfig { required public init() {}
     public var dragThreshold: CGFloat = 0
     public var isStackingEnabled: Bool = false
     public var dragGestureAreaSize: CGFloat = 0
+    public var isDragToDismissEnabled: Bool = true
 }

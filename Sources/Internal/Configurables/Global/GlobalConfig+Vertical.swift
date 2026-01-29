@@ -30,4 +30,5 @@ public final class GlobalConfigVertical: GlobalConfig { required public init() {
     public var ignoredSafeAreaEdges: Edge.Set = []
     public var heightMode: HeightMode = .auto
     public var dragDetents: [DragDetent] = []
+    public var isDragToDismissEnabled: Bool = true
 }

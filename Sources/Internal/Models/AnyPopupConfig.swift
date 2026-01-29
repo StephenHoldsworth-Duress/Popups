@@ -43,6 +43,6 @@ extension AnyPopupConfig {
         self.isTapOutsideToDismissEnabled = config.isTapOutsideToDismissEnabled
         self.isDragGestureEnabled = config.isDragGestureEnabled
         self.dragGestureAreaSize = config.dragGestureAreaSize
-        self.isDragToDismissEnabled = config.isDragGestureEnabled
+        self.isDragToDismissEnabled = config.isDragToDismissEnabled
     }
 }

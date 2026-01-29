@@ -163,5 +163,5 @@ public extension LocalConfigVertical {
     func dragGestureAreaSize(_ value: CGFloat) -> Self { self.dragGestureAreaSize = value; return self }
     
     
-    func isDragToDismissEnabled(_ value: Bool) -> Self { self.isDragGestureEnabled = value; return self }
+    func isDragToDismissEnabled(_ value: Bool) -> Self { self.isDragToDismissEnabled = value; return self }
 }
