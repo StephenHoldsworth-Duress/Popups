@@ -321,12 +321,20 @@ private extension VM.VerticalStack {
     func isValidDragGesture(_ value: DragGestureState) -> Bool {
         guard popups.isEmpty == false else { return false }
         
-        // Removing the checks for whether a drag gesture is valid or not.
-        // This function is not fully understood, and created some unexpected drag detents behaviour.
-        return true
+        // Determines the true Y position of the top most popup
+        var lastPopupY = (popups.last?.height ?? 0) + (popups.last?.dragHeight ?? 0)
+        
+        // Determines the true Y origin point of the current gesture (which we can then use to filter for illegitmate drag gestures)
+        var dragGestureY = (popups.last?.dragHeight ?? 0) < 0 ? popups.last!.dragHeight + value.startLocationY : value.startLocationY
+        
+        if (dragGestureY <= 50) { // Our threshold
+            return true
+        }
+        
+        return false
         
         guard let gestureAreaSize = popups.last?.config.dragGestureAreaSize, gestureAreaSize >= 0 else { return false }
-
+        
         var minStartPointOffset: CGFloat {
             if screen.height <= activePopupProperties.height ?? 0 { return screen.safeArea.top + gestureAreaSize }
             return gestureAreaSize
